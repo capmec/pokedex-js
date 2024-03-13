@@ -1,189 +1,222 @@
-// //Defining and Calling Functions
-// function ShowMessage() {
-// 	console.log('Hello Ron!');
-// 	document.write('Hello Ron!');
-// }
-// ShowMessage();
+// //forEach() Loops
 
-// //Functions with return Statement
-// function Sum(val1, val2) {
-// 	return val1 + val2;
-// }
+// // let names = ['John', 'Anne', 'Carly'];
 
-// let result = Sum(5, 20);
-// console.log(result);
+// console.log(
+// 	'You could loop through the array using the traditional for block:',
+// );
+// let nameList = ['John', 'Anne', 'Carly'];
 
-// //Function Expression
-// let add = function sum(val1, val2) {
-// 	return val1 + val2;
-// };
-// let result1 = add(100, 200);
-// console.log(result1);
-// // let result2 = sum(100, 200);
-// // console.log(result2);
-
-// //Anonymous Function
-// let Message = function () {
-// 	console.log('Hello World!');
-// };
-// Message();
-
-// let sayHello = function (firstName) {
-// 	console.log('Hello ' + firstName);
-// };
-
-// sayHello('Bobby');
-// sayHello();
-
-// //Callback Functions
-// function functionOne(param) {
-// 	return param;
+// for (let i = 0; i < nameList.length; i++) {
+// 	console.log(nameList[i]);
 // }
 
-// function functionTwo(param) {
-// 	//some code
-// 	return param + 2;
-// }
-// console.log(functionOne(2));
-// console.log(functionTwo(functionOne(2)));
+// console.log(
+// 	'Another way you could iterate over this array is by using the forEach() function as follows:',
+// );
 
-// //Pure Functions
-// function addTwo(number) {
-// 	return number + 2;
-// }
-// console.log(addTwo(5));
+// let nameListFE = ['John', 'Anne', 'Carly'];
 
-// let age = 10;
+// nameListFE.forEach(function (name) {
+// 	console.log(name);
+// });
 
-// function getNewAge(age) {
-// 	age = age + 1;
-// 	return age;
-// }
-
-// console.log(getNewAge(age));
-// console.log(age);
-
-// //The Function return Statement
-
-// function divide(dividend, divisor) {
-// 	if (divisor === 0) {
-// 		return 'You are trying to divide by zero';
-// 	} else {
-// 		let result = dividend / divisor;
-// 		return result;
-// 	}
-// }
-// console.log(divide(4, 2));
-// console.log(divide(7, 0));
-// console.log(divide(1, 4));
-// console.log(divide(12, -3));
-
-// // a function without a return statement
-// function add2(number1, number2) {
-// 	console.log(number1 + number2);
-// }
-// let result3 = add2(1, 2);
-// console.log(result3);
-
-// // a function with a return statement
-// function multiply(number1, number2) {
-// 	return number1 * number2;
-// }
-// let result4 = multiply(3, 5);
-// console.log(result4);
-
-// // Assigning a function to a variable
-// let add4 = function (number1, number2) {
-// 	return number1 + number2;
-// };
-
-// // Assigning a function to an object property
-// let person = {};
-
-// person.tellMyAge = function () {
-// 	return 42;
-// };
-
-// //The this Keyword
-
-// let dog = {
-// 	type: 'pug',
-// 	age: 3,
-// 	name: 'Margot',
-// 	speak: function () {
-// 		console.log('Woof! I am ' + this.name);
+// let userList = [
+// 	{
+// 		name: 'Liz',
+// 		age: 20,
 // 	},
-// };
-// dog.speak();
+// 	{
+// 		name: 'John',
+// 		age: 30,
+// 	},
+// 	{
+// 		name: 'Sammy',
+// 		age: 40,
+// 	},
+// ];
 
-// //Arrow Functions
+// console.log(
+// 	'Logging the details of this list using a traditional for loop would look something like this:',
+// );
 
-// let addThree = (number4) => number4 + 2;
+// for (let i = 0; i < userList.length; i++) {
+// 	console.log(userList[i].name + ' is ' + userList[i].age + ' years old.');
+// }
 
-// // The example above is the same as writing this:
+// let myArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-// let add3 = function (number4) {
-// 	return number + 2;
-// };
+// //external function
+// console.log('External Function');
+// myArray.forEach(logToConsole);
 
-// //Predefined Functions
+// function logToConsole(item) {
+// 	console.log(item);
+// }
 
-// //console.log('Hello!');
-// //console.warn('Warning!');
-// //console.error('Error!');
+// //internal anonymous function
+// console.log('internal anonymous function');
+// myArray.forEach(function (item) {
+// 	console.log(item);
+// });
 
-// // let name = prompt('Please enter your name!');
-// // console.log(name);
+// //arrow function
+// // {} is not necessary when there is only one line
+// console.log('arrow function');
+// myArray.forEach((item) => console.log(item));
 
-// // let isAccepted = confirm('Do you accept?');
-// // console.log(isAccepted);
+// (function () {
+// 	let myArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+// 	let str = '';
 
-// // function runThisLater() {
-// // 	console.log('Hello!');
-// // }
-// //setTimeout(runThisLater, 1000); // Run this in 1000ms
+// 	myArray.forEach(makeRainbowDivs);
 
-// // Built-in Functions for Objects & Arrays
+// 	function makeRainbowDivs(item) {
+// 		str += `<div> I am div ${item}</div>`;
+// 	}
+
+// 	document.getElementById('container').innerHTML = str;
+// })();
+
+// (function () {
+// 	let myArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+// 	let str = '';
+
+// 	myArray.forEach(function (item) {
+// 		str += `<div> I am div ${item}</div>`;
+// 	});
+
+// 	document.getElementById('container').innerHTML = str;
+// })();
+
+//FOR EACH USING ARROW FUNCTION
+// (function () {
+// 	let myArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+// 	let str = '';
+
+// 	myArray.forEach((item) => (str += `<div> I am div ${item}</div>`));
+
+// 	document.getElementById('container').innerHTML = str;
+// })();
+
+//OBJECT KEYS
 
 // let anne = {
 // 	name: 'Anne',
 // 	age: 38,
 // 	children: [],
 // };
-// let allProperties = Object.keys(anne);
 
-// let names = ['John', 'Anne', 'Carly'];
-// console.log(names.length); // 3
+// Object.keys(anne).forEach(function (property) {
+// 	console.log(anne[property]);
+// 	document.write(property + ': ' + anne[property] + '<br>');
+// });
 
-// let names2 = ['John', 'Anne', 'Carly'];
-// //names2.push('Bob'); // Add to the end of the array
-// //names2.unshift('Julia'); // Add to the start of the array (as new first item)
-// // names2.pop(); // Remove the LAST item from the array (Bob)
-// // names2.shift(); // Remove the FIRST item from the array (Julia)
+//FUNCTIONAL PROGRAMMING
 
-// console.log(names2);
+// foodList = ['Pizza', 'Salad', 'Tuna'];
 
-// function randomNumber() {
-// 	var baseNum = 2;
+// let anne = {
+// 	name: 'Anne Smith',
+// 	age: 38,
+// 	hasChildren: false,
+// };
+
+// function getPersonDescription(person) {
+// 	let ageDescription = person.age + ' years old';
+// 	let ChildrenDescription = person.hasChildren
+// 		? 'has children'
+// 		: 'has no children';
+
+// 	return person.name + ', ' + ageDescription + ', ' + ChildrenDescription;
 // }
-// console.log(randomNumber(baseNum));
+// console.log(getPersonDescription(anne));
 
-function add(num1, num2) {
-	return num1 + num2;
-}
-console.log(add(9, 38));
+// var pug = {
+// 	age: 4,
+// 	hasPups: false,
+// 	name: 'Fred',
+// };
 
-function subtract(num1, num2) {
-	return num1 - num2;
-}
-console.log(subtract(887, 65));
+// function getAgeDescription() {
+// 	return pug.age;
+// }
 
-function multiply(num1, num2) {
-	return num1 * num2;
-}
-console.log(multiply(98, 22));
+// function getPupDescription(hasPups) {
+// 	return hasPups ? 'has pups' : 'has no pups';
+// }
+// function getDogDescription(dog) {
+// 	var ageDescription = getAgeDescription(dog.age);
+// 	var pupDescription = getPupDescription(dog.hasPups);
 
-function divide(num1, num2) {
-	return num1 / num2;
-}
-console.log(divide(45, 5));
+// 	return dog.name + ', ' + ageDescription + ', ' + pupDescription;
+// }
+
+// console.log(getDogDescription(pug));
+
+// let add = (a, b) => a + b;
+// let multiply = (a, b) => a * b;
+
+// console.log(add(2, multiply(4, 2)));
+
+// function getFullName(person) {
+// 	return person.firstName + ' ' + person.lastName;
+// }
+
+// let Character = {
+// 	firstName: 'Homer',
+// 	lastName: 'Simpson',
+// };
+
+// let fullName = getFullName(Character);
+
+// console.log(fullName);
+
+// let app = function () {
+// 	let data = 'John';
+// 	let somePrivateData = 'secrets';
+
+// 	return {
+// 		username: data,
+// 	};
+// };
+
+// Global Variables and IIFE
+
+// let pokemonRepository = (function () {
+// 	let pokemonList = []; //empty array
+
+// 	return {
+// 		add: function (pokemon) {
+// 			pokemonList.push(pokemon);
+// 		},
+// 		getAll: function () {
+// 			return pokemonList;
+// 		},
+// 	};
+// })();
+
+// console.log(pokemonRepository.getAll()); // [] empty array
+// pokemonRepository.add({ name: 'Pikachu' });
+// console.log(pokemonRepository.getAll());
+
+//OR
+
+let pokemonRepository = (function () {
+	let pokemonList = [];
+
+	function add(pokemon) {
+		pokemonList.push(pokemon);
+	}
+
+	function getAll() {
+		return pokemonList;
+	}
+
+	return {
+		add: add,
+		getAll: getAll,
+	};
+})();
+console.log(pokemonRepository.add({ name: 'Pikachu' }));
+console.log(pokemonRepository.getAll());
