@@ -1,5 +1,47 @@
 body {
-	background-color: coral;
+	background-color: rgb(59, 59, 59);
 	margin: auto;
 	color: antiquewhite;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.hidden {
+	display: none;
+}
+
+/* BUTTON */
+.button {
+	background-color: #fff000;
+	border-radius: 12px;
+	color: #000;
+	cursor: pointer;
+	font-weight: bold;
+	padding: 10px 15px;
+	text-align: center;
+	transition: 200ms;
+	display: inline-block;
+	box-sizing: border-box;
+	border: 0;
+	font-size: 16px;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	margin: 10px 10px 10px 10px;
+	width: 200px;
+}
+
+.button:not(:disabled):hover,
+.button:not(:disabled):focus {
+	outline: 0;
+	background: #f4e603;
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2), 0 3px 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+.button:disabled {
+	filter: saturate(0.2) opacity(0.5);
+	-webkit-filter: saturate(0.2) opacity(0.5);
+	cursor: not-allowed;
 }
