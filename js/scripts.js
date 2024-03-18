@@ -1,43 +1,12 @@
 let pokemonRepository = (function () {
-	let pokemonList = [
-		{
-			name: 'Bulbasaur',
-			height: 0.7,
-			types: ['grass', 'poison'],
-		},
-		{
-			name: 'Vapereon',
-			height: 1.0,
-			types: ['water'],
-		},
-		{
-			name: 'Vulpix',
-			height: 0.6,
-			types: ['fire'],
-		},
-		{
-			name: 'Metapod',
-			height: 0.7,
-			types: ['Bug'],
-		},
-		{
-			name: 'Charizad',
-			height: 1.7,
-			types: ['fire', 'flying'],
-		},
-		{
-			name: 'Machamp',
-			height: 1.6,
-			types: ['fighting'],
-		},
-	];
+	let pokemonList = [];
+	let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=15';
 
 	function add(pokemon) {
 		if (
 			typeof pokemon === 'object' &&
 			'name' in pokemon &&
-			'height' in pokemon &&
-			'types' in pokemon
+			'detailsUrl' in pokemon
 		) {
 			pokemonList.push(pokemon);
 		} else {
@@ -50,49 +19,79 @@ let pokemonRepository = (function () {
 	}
 
 	function addListItem(pokemon) {
-		// create a variable inside the forEach's loop function block, then assign it the ul element you just added to your “index.html” file. (Hint: use document.querySelector). All the rest of the steps will take place inside your forEach loop block.
-
 		let ul = document.querySelector('.pokemon-list');
-
-		//Create an li element (e.g., let listItem = document.createElement('li')).
-
 		let listItem = document.createElement('li');
-		// listItem.innerHTML = pokemon.name;
-
-		// Create a button element (e.g., let button = document.createElement('button')) and set its innerText to be the Pokémon's name (remember that forEach returns a Pokémon in each iteration).
-
 		let button = document.createElement('button');
 		button.innerText = pokemon.name;
-		//Add a class to the button using the classList.add method (button.classList.add(...)).
-
 		button.classList.add('button');
-
-		//Now, append the button to the list item as its child.
-
 		listItem.appendChild(button);
-
-		//Finally, append the list item to the unordered list as its child.
 		ul.appendChild(listItem);
+		button.addEventListener('click', function (event) {
+			showDetails(pokemon);
+		});
+	}
+
+	function loadList() {
+		return fetch(apiUrl)
+			.then(function (response) {
+				return response.json(); // This returns a promise!
+			})
+			.then(function (json) {
+				json.results.forEach(function (item) {
+					let pokemon = {
+						name: item.name,
+						detailsUrl: item.url,
+					};
+					add(pokemon);
+				});
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	}
+	function loadDetails(item) {
+		let url = item.detailsUrl;
+		return fetch(url)
+			.then(function (response) {
+				return response.json();
+			})
+			.then(function (details) {
+				// Now we add the details to the item
+				item.imageUrl = details.sprites.front_default;
+				item.height = details.height;
+				item.types = details.types;
+			})
+			.catch(function (e) {
+				console.error(e);
+			});
+	}
+
+	function showDetails(pokemon) {
+		loadDetails(pokemon).then(function () {
+			console.log(pokemon);
+		});
 	}
 
 	return {
 		add: add,
 		getAll: getAll,
 		addListItem: addListItem,
+		loadList: loadList,
+		loadDetails: loadDetails,
+		showDetails: showDetails,
 	};
 })();
 
-console.log(pokemonRepository.getAll());
-pokemonRepository.add({ name: 'Pikachu', height: 0.4, types: ['electric'] });
-console.log(pokemonRepository.getAll());
-pokemonRepository.getAll().forEach(function (pokemon) {
-	pokemonRepository.addListItem(pokemon);
+pokemonRepository.add({
+	name: 'Pikachu',
+	detailsUrl: '',
+	height: 0.3,
+	types: ['electric'],
 });
+// console.log(pokemonRepository.getAll());
 
-window.addEventListener('keydown', function (event) {
-	let survey_form = document.querySelector('#survey_form');
-	let isFormHidden = survey_form.classList.contains('hidden');
-	if (!isFormHidden && event.key === 'Escape') {
-		survey_form.classList.add('hidden');
-	}
+pokemonRepository.loadList().then(function () {
+	pokemonRepository.getAll().forEach(function (pokemon) {
+		pokemonRepository.addListItem(pokemon);
+	});
 });

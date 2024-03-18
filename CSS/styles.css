@@ -1,6 +1,9 @@
 body {
 	background-color: rgb(59, 59, 59);
-	margin: auto;
+	margin: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	color: antiquewhite;
 }
 
