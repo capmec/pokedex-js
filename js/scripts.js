@@ -3,15 +3,7 @@ let pokemonRepository = (function () {
 	let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=15';
 
 	function add(pokemon) {
-		if (
-			typeof pokemon === 'object' &&
-			'name' in pokemon &&
-			'detailsUrl' in pokemon
-		) {
-			pokemonList.push(pokemon);
-		} else {
-			console.log('Pokemon attribute is missing');
-		}
+		pokemonList.push(pokemon);
 	}
 
 	function getAll() {
@@ -31,12 +23,23 @@ let pokemonRepository = (function () {
 		});
 	}
 
+	function showLoading() {
+		document.getElementById('loadingMessage').style.display = 'block';
+	}
+
+	function hideLoading() {
+		document.getElementById('loadingMessage').style.display = 'none';
+	}
+
+	//can loadList() be an async function?
 	function loadList() {
+		showLoading();
 		return fetch(apiUrl)
 			.then(function (response) {
 				return response.json(); // This returns a promise!
 			})
 			.then(function (json) {
+				hideLoading();
 				json.results.forEach(function (item) {
 					let pokemon = {
 						name: item.name,
@@ -50,12 +53,14 @@ let pokemonRepository = (function () {
 			});
 	}
 	function loadDetails(item) {
+		showLoading();
 		let url = item.detailsUrl;
 		return fetch(url)
 			.then(function (response) {
 				return response.json();
 			})
 			.then(function (details) {
+				hideLoading();
 				// Now we add the details to the item
 				item.imageUrl = details.sprites.front_default;
 				item.height = details.height;
