@@ -87,12 +87,12 @@ let pokemonRepository = (function () {
 	};
 })();
 
-pokemonRepository.add({
-	name: 'Pikachu',
-	detailsUrl: '',
-	height: 0.3,
-	types: ['electric'],
-});
+// pokemonRepository.add({
+// 	name: 'Pikachu',
+// 	detailsUrl: '',
+// 	height: 0.3,
+// 	types: ['electric'],
+// });
 // console.log(pokemonRepository.getAll());
 
 pokemonRepository.loadList().then(function () {
