@@ -12,18 +12,28 @@
 		<title>Pokedex-Simple JS App</title>
 	</head>
 	<body>
-		<h1>Pokedex</h1>
-		<p>List of some Pokémon stats</p>
+		<header>
+			<img
+				src="./img/pokedex_logo.png"
+				alt="Pokedex" />
+		</header>
 
-		<div
-			id="loadingMessage"
-			style="display: none">
-			Loading...
-		</div>
+		<main>
+			<div class="sub-header">
+				<h3>List of some Pokémon stats</h3>
+			</div>
 
-		<ul
-			id="show-modal"
-			class="pokemon-list"></ul>
+			<div class="grid">
+				<div class="cards"></div>
+				<div
+					id="loadingMessage"
+					style="display: none">
+					Loading...
+				</div>
+
+				<div class="cards"></div>
+			</div>
+		</main>
 
 		<!-- <button id="show-modal">Show modal</button> -->
 		<div id="modal-container">
