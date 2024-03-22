@@ -1,6 +1,67 @@
 let pokemonRepository = (function () {
 	let pokemonList = [];
-	let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=15';
+	let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+
+	let modalContainer = document.querySelector('#modal-container');
+
+	function showDetails(pokemon) {
+		loadDetails(pokemon).then(function () {
+			console.log(pokemon);
+			showModal(pokemon);
+		});
+	}
+
+	function showModal(pokemon) {
+		// Clear all existing modal content
+		modalContainer.innerHTML = '';
+
+		let modal = document.createElement('div');
+		modal.classList.add('modal');
+
+		// Add the new modal content
+		let closeButtonElement = document.createElement('button');
+		closeButtonElement.classList.add('modal-close');
+		closeButtonElement.innerText = 'Close';
+		closeButtonElement.addEventListener('click', hideModal);
+
+		let nameElement = document.createElement('h1');
+		nameElement.innerText = pokemon.name;
+
+		let heightElement = document.createElement('p');
+		heightElement.innerText = `Height: ${pokemon.height} m`;
+
+		let imageElement = document.createElement('img');
+		imageElement.src = pokemon.imageUrl;
+		imageElement.alt = pokemon.name;
+
+		// Append the modal content to the modal
+		modal.appendChild(closeButtonElement);
+		modal.appendChild(nameElement);
+		modal.appendChild(heightElement);
+		modal.appendChild(imageElement);
+
+		modalContainer.appendChild(modal);
+
+		//display the modal
+		modalContainer.classList.add('is-visible');
+	}
+
+	function hideModal() {
+		modalContainer.classList.remove('is-visible');
+	}
+
+	window.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+			hideModal();
+		}
+	});
+	// Close modal if clicked outside of it
+	modalContainer.addEventListener('click', (e) => {
+		let target = e.target;
+		if (target === modalContainer) {
+			hideModal();
+		}
+	});
 
 	function add(pokemon) {
 		pokemonList.push(pokemon);
@@ -52,29 +113,23 @@ let pokemonRepository = (function () {
 				console.log(err);
 			});
 	}
-	function loadDetails(item) {
+	function loadDetails(pokemon) {
 		showLoading();
-		let url = item.detailsUrl;
+		let url = pokemon.detailsUrl;
 		return fetch(url)
 			.then(function (response) {
 				return response.json();
 			})
 			.then(function (details) {
 				hideLoading();
-				// Now we add the details to the item
-				item.imageUrl = details.sprites.front_default;
-				item.height = details.height;
-				item.types = details.types;
+				// Now we add the details to the pokemon
+				pokemon.imageUrl = details.sprites.front_default;
+				pokemon.height = details.height;
+				pokemon.types = details.types;
 			})
 			.catch(function (e) {
 				console.error(e);
 			});
-	}
-
-	function showDetails(pokemon) {
-		loadDetails(pokemon).then(function () {
-			console.log(pokemon);
-		});
 	}
 
 	return {
