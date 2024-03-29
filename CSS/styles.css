@@ -2,6 +2,13 @@
 	box-sizing: border-box;
 }
 
+body {
+	margin: 10px;
+	background-color: #21213d;
+	padding: 10px;
+	align-items: center;
+}
+
 .navbar {
 	display: flex;
 	justify-content: space-between;
@@ -20,21 +27,6 @@
 	margin-left: 24px;
 	margin-right: 24px;
 	padding: 24px;
-}
-
-.container {
-	border-color: #d1d2d3;
-	border: 5px;
-	margin-top: auto;
-	display: flex;
-	width: 100%;
-}
-
-body {
-	margin: 10px;
-	background-color: #21213d;
-	padding: 10px;
-	align-items: center;
 }
 
 /* Custom CSS for Pokéballs */
