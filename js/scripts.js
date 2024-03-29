@@ -1,3 +1,68 @@
+document.addEventListener('DOMContentLoaded', function () {
+	const pokemonGrid = document.getElementById('pokemonGrid');
+
+	// Function to capitalize first letter of a string
+	function capitalizeFirstLetter(string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	// Function to show Pokémon details in modal
+	function showPokemonDetails(pokemon) {
+		fetch(pokemon.url)
+			.then((response) => response.json())
+			.then((data) => {
+				const pokemonDetails = document.getElementById('pokemonDetails');
+				pokemonDetails.innerHTML = `
+                    <img src="${data.sprites.front_default}" alt="${pokemon.name}" class="img-fluid">
+    <p><strong>Name:</strong> ${capitalizeFirstLetter(pokemon.name)}</p>
+    <p><strong>Height:</strong> ${(data.height / 10).toFixed(1)}m</p>
+    <p><strong>Weight:</strong> ${(data.weight / 10).toFixed(1)}kg</p>
+    <p><strong>Types:</strong> ${data.types.map((type) => capitalizeFirstLetter(type.type.name)).join(', ')}</p>
+    <p><strong>Abilities:</strong> ${data.abilities
+			.map((ability) => capitalizeFirstLetter(ability.ability.name))
+			.join(', ')}</p>
+`;
+
+				$('#pokemonModal .modal-title').text(capitalizeFirstLetter(pokemon.name)); // Set modal title
+				$('#pokemonModal').modal('show'); // Show the modal using jQuery
+			})
+			.catch((error) => console.error('Error fetching Pokémon details:', error));
+	}
+
+	// Function to create Pokémon card
+	function createPokemonCard(pokemon) {
+		let card = document.createElement('div');
+		card.classList.add('col-md-3', 'pokemon-card');
+		card.innerHTML = `
+            <img class="pokemon-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getPokemonId(
+							pokemon.url,
+						)}.png" alt="${pokemon.name}" class="img-fluid">
+            <p class="pokemon-name">${capitalizeFirstLetter(pokemon.name)}</p>
+        `;
+		card.addEventListener('click', () => {
+			showPokemonDetails(pokemon);
+		});
+		pokemonGrid.appendChild(card);
+	}
+
+	// Function to get Pokémon ID from URL
+	function getPokemonId(url) {
+		const id = url.split('/').slice(-2, -1)[0];
+		return id;
+	}
+
+	// Fetch Pokémon data from the API and create Pokémon cards
+	fetch('https://pokeapi.co/api/v2/pokemon/?limit=150')
+		.then((response) => response.json())
+		.then((data) => {
+			const pokemons = data.results;
+			pokemons.forEach((pokemon) => {
+				createPokemonCard(pokemon);
+			});
+		})
+		.catch((error) => console.error('Error fetching Pokémon data:', error));
+});
+
 let pokemonRepo = (function () {
 	let pokemonList = [];
 	let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
@@ -29,22 +94,18 @@ let pokemonRepo = (function () {
 	}
 
 	// Function to add a list item for a Pokemon
-
 	function addListItem(pokemon) {
-		let pokemonList = document.querySelector('.cards');
+		let pokemonListContainer = document.querySelector('.cards');
+		if (!pokemonListContainer) return; // Exit if the container doesn't exist
 
 		let listItem = document.createElement('div');
-
 		let card = document.createElement('cards-inner');
 		card.innerText = capitalizeFirstLetter(pokemon.name);
 		card.classList.add('cards-inner');
-
 		card.setAttribute('data-target', '#exampleModal');
 		card.setAttribute('data-toggle', 'modal');
-
 		listItem.appendChild(card);
-		pokemonList.appendChild(listItem);
-		pokemonList.appendChild(listItem);
+		pokemonListContainer.appendChild(listItem);
 
 		addEventListenertoButton(card, pokemon);
 	}
@@ -56,12 +117,11 @@ let pokemonRepo = (function () {
 	}
 
 	// Function to load the list of Pokemon from the API
-
 	function loadList() {
 		showLoading();
 		return fetch(apiUrl)
 			.then(function (response) {
-				return response.json(); // This returns a promise!
+				return response.json();
 			})
 			.then(function (json) {
 				hideLoading();
@@ -74,7 +134,7 @@ let pokemonRepo = (function () {
 				});
 			})
 			.catch(function (err) {
-				console.log(err);
+				console.error(err);
 			});
 	}
 
@@ -98,74 +158,15 @@ let pokemonRepo = (function () {
 	}
 
 	//  modal code
-
-	let modal = document.querySelector('.modal');
-
 	function showDetails(item) {
-		pokemonRepo.loadDetails(item).then(function () {
+		loadDetails(item).then(function () {
 			showModal(item);
 		});
 	}
 
 	function showModal(pokemon) {
-		let modalBody = document.querySelector('.modal-body');
-		let modalHeader = document.querySelector('.modal-header');
-		modalBody.innerHTML = '';
-
-		let modalTitle = document.querySelector('.modal-title');
-		modalTitle.innerText = capitalizeFirstLetter(pokemon.name);
-		let closeButtonElement = document.querySelector('.close');
-
-		let imageElement = document.createElement('img');
-		imageElement.classList.add('modal-img');
-		imageElement.src = pokemon.imageUrl;
-		imageElement.alt = 'image of' + pokemon.name;
-
-		let typesElement = document.createElement('p');
-		let types = [pokemon.types[0].type.name];
-		for (let i = 1; i < pokemon.types.length; i++) {
-			types.push(', ' + pokemon.types[i].type.name);
-		}
-		typesElement.innerHTML = '<strong>Types:</strong> ' + types.join('');
-
-		let heightElement = document.createElement('p');
-		heightElement.innerHTML = '<strong>Height:</strong> ' + pokemon.height + 'm';
-
-		let weightElement = document.createElement('p');
-		weightElement.innerHTML = '<strong>Weight:</strong> ' + pokemon.weight;
-
-		let abilities = document.createElement('p');
-		let abilitiesList = [pokemon.abilities[0].ability.name];
-		for (let i = 1; i < pokemon.abilities.length; i++) {
-			abilitiesList.push(', ' + pokemon.abilities[i].ability.name);
-		}
-		abilities.innerHTML = '<strong>Abilities:</strong> ' + abilitiesList.join('');
-
-		modalHeader.appendChild(modalTitle);
-		modalHeader.appendChild(closeButtonElement);
-		modalBody.appendChild(imageElement);
-		modalBody.appendChild(typesElement);
-		modalBody.appendChild(heightElement);
-		modalBody.appendChild(weightElement);
-		modalBody.appendChild(abilities);
+		showPokemonDetails(pokemon);
 	}
-
-	function hideModal() {
-		modal.classList.remove('is-visible');
-	}
-
-	window.addEventListener('keydown', (e) => {
-		if (e.key === 'Escape' && modal.classList.contains('is-visible')) {
-			hideModal();
-		}
-	});
-
-	modal.addEventListener('click', (e) => {
-		let target = e.target;
-		if (target === modal) {
-			hideModal();
-		}
-	});
 
 	return {
 		add: add,
