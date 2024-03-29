@@ -4,7 +4,7 @@
 
 body {
 	margin: 10px;
-	background-color: #333;
+	background-color: #21213d;
 	padding: 10px;
 	align-items: center;
 }
@@ -47,15 +47,16 @@ body {
 }
 
 .cards .cards-inner {
-	position: relative;
 	display: flex;
+	text-align: center;
 	background-color: #d1d2d3;
 	padding: 20px;
 	border-radius: 5px;
 	transition: box-shadow 0.4s;
 	font-weight: 600;
+	height: auto;
 }
-.cards .cards-inner:hover {
+.cards:hover {
 	box-shadow: 0 5px 20px rgba(1, 45, 128, 0.5);
 }
 

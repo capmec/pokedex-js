@@ -31,25 +31,26 @@ let pokemonRepo = (function () {
 	// Function to add a list item for a Pokemon
 
 	function addListItem(pokemon) {
-		let pokemonList = document.querySelector('.pokemon-list');
+		let pokemonList = document.querySelector('.cards');
 
-		let listItem = document.createElement('li');
+		let listItem = document.createElement('div');
 
-		let button = document.createElement('button');
-		button.innerText = capitalizeFirstLetter(pokemon.name);
-		button.classList.add('btn-primary', 'btn-block', 'btn-lg', 'mb-3');
+		let card = document.createElement('cards-inner');
+		card.innerText = capitalizeFirstLetter(pokemon.name);
+		card.classList.add('cards-inner');
 
-		button.setAttribute('data-target', '#exampleModal');
-		button.setAttribute('data-toggle', 'modal');
+		card.setAttribute('data-target', '#exampleModal');
+		card.setAttribute('data-toggle', 'modal');
 
-		listItem.appendChild(button);
+		listItem.appendChild(card);
+		pokemonList.appendChild(listItem);
 		pokemonList.appendChild(listItem);
 
-		addEventListenertoButton(button, pokemon);
+		addEventListenertoButton(card, pokemon);
 	}
 
-	function addEventListenertoButton(button, pokemon) {
-		button.addEventListener('click', function () {
+	function addEventListenertoButton(card, pokemon) {
+		card.addEventListener('click', function () {
 			showDetails(pokemon);
 		});
 	}
