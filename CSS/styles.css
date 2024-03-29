@@ -9,9 +9,13 @@ body {
 	align-items: center;
 }
 
-.navigation {
-	background-color: #333;
-	overflow: hidden;
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #fff;
+	padding: 10px 20px;
+	border-bottom: 2px solid #f53b57;
 }
 
 .sub-header {
@@ -22,6 +26,7 @@ body {
 	color: blanchedalmond;
 	margin-left: 24px;
 	margin-right: 24px;
+	padding: 24px;
 }
 
 .container {
@@ -56,51 +61,42 @@ body {
 
 /* //MODAL */
 
-#modal-container {
-	display: none;
+.modal-img {
+	width: 200px;
+	height: 200px;
 }
 
-#modal-container.is-visible {
-	position: fixed;
-	padding: 20px;
-	box-sizing: border-box;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-
-	/* to show it above other content (overlays) */
-	z-index: 999;
-
-	/*to allow scrolling */
-	overflow: auto;
-
-	/* to center the modal */
-	display: grid;
-	text-align: center;
+.modal-header {
+	display: flex;
+	justify-content: space-evenly;
+	gap: 60px;
+	align-items: center;
+	border: none;
+	background-image: url(../img/card-bg.png);
+}
+.modal-title {
+	font-size: 2rem;
+	font-weight: 600;
+	color: #333;
 }
 
-.modal {
-	margin: auto;
-	display: inline-block;
-	box-sizing: border-box;
-	background-color: #fff;
-	color: #000;
-	padding: 15px;
-	width: 100%;
-	max-width: 700px;
-	border-radius: 10px;
-	text-align: left;
+.modal-body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-image: url(../img/card-bg.png);
+	background-size: cover;
 }
 
-.modal-close {
-	float: right;
-	cursor: pointer;
-	-webkit-appearance: none;
-	appearance: none;
-	border: 0;
-	background: none;
-	color: #777;
-	text-decoration: underline;
+.modal-footer {
+	display: flex;
+	border: none;
+	justify-content: flex-end;
+	align-items: center;
+	background-image: url(../img/card-bg.png);
+}
+
+.btn .btn-close {
+	color: #dcfd00;
 }
