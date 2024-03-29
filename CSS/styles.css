@@ -39,7 +39,7 @@ body {
 
 .cards {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	grid-gap: 20px;
 	padding: 0 30px 50px;
 	margin: 0 24px;
@@ -48,45 +48,15 @@ body {
 
 .cards .cards-inner {
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background-color: #fff; /* White background */
+	text-align: center;
+	background-color: #d1d2d3;
 	padding: 20px;
-	border-radius: 50%; /* Rounded shape */
-	width: 200px; /* Adjust width to your preference */
-	height: 200px; /* Adjust height to your preference */
-	border: 10px solid #000; /* Black border */
-	position: relative; /* Position relative for the inner elements */
+	border-radius: 5px;
+	transition: box-shadow 0.4s;
+	font-weight: 600;
+	height: auto;
 }
-
-.cards .cards-inner::before {
-	content: '';
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 70px; /* Adjust the width of the inner circle */
-	height: 70px; /* Adjust the height of the inner circle */
-	background-color: #fff; /* White color */
-	border-radius: 50%; /* Rounded shape */
-	z-index: 1; /* Ensure it's above the main circle */
-}
-
-.cards .cards-inner::after {
-	content: '';
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 50px; /* Adjust the width of the center circle */
-	height: 50px; /* Adjust the height of the center circle */
-	background-color: #000; /* Black color */
-	border-radius: 50%; /* Rounded shape */
-	z-index: 2; /* Ensure it's above the white circle */
-}
-
-.cards:hover .cards-inner {
+.cards:hover {
 	box-shadow: 0 5px 20px rgba(1, 45, 128, 0.5);
 }
 
