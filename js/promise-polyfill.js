@@ -40,14 +40,7 @@
 				(o[e] = { status: 'fulfilled', value: n }), 0 == --i && t(o);
 			}
 			if (!e || 'undefined' == typeof e.length)
-				return n(
-					new TypeError(
-						typeof e +
-							' ' +
-							e +
-							' is not iterable(cannot read property Symbol(Symbol.iterator))',
-					),
-				);
+				return n(new TypeError(typeof e + ' ' + e + ' is not iterable(cannot read property Symbol(Symbol.iterator))'));
 			var o = Array.prototype.slice.call(e);
 			if (0 === o.length) return t([]);
 			for (var i = o.length, f = 0; o.length > f; f++) r(f, o[f]);
@@ -59,8 +52,7 @@
 	function r(e) {
 		var t = this;
 		return new t(function (r, o) {
-			if (!e || 'undefined' == typeof e.length)
-				return o(new TypeError('Promise.any accepts an array'));
+			if (!e || 'undefined' == typeof e.length) return o(new TypeError('Promise.any accepts an array'));
 			var i = Array.prototype.slice.call(e);
 			if (0 === i.length) return o();
 			for (var f = [], u = 0; i.length > u; u++)
@@ -68,9 +60,7 @@
 					t.resolve(i[u])
 						.then(r)
 						['catch'](function (e) {
-							f.push(e),
-								f.length === i.length &&
-									o(new n(f, 'All promises were rejected'));
+							f.push(e), f.length === i.length && o(new n(f, 'All promises were rejected'));
 						});
 				} catch (c) {
 					o(c);
@@ -82,14 +72,9 @@
 	}
 	function i() {}
 	function f(e) {
-		if (!(this instanceof f))
-			throw new TypeError('Promises must be constructed via new');
+		if (!(this instanceof f)) throw new TypeError('Promises must be constructed via new');
 		if ('function' != typeof e) throw new TypeError('not a function');
-		(this._state = 0),
-			(this._handled = !1),
-			(this._value = undefined),
-			(this._deferreds = []),
-			s(e, this);
+		(this._state = 0), (this._handled = !1), (this._value = undefined), (this._deferreds = []), s(e, this);
 	}
 	function u(e, t) {
 		for (; 3 === e._state; ) e = e._value;
@@ -111,8 +96,7 @@
 	}
 	function c(e, t) {
 		try {
-			if (t === e)
-				throw new TypeError('A promise cannot be resolved with itself.');
+			if (t === e) throw new TypeError('A promise cannot be resolved with itself.');
 			if (t && ('object' == typeof t || 'function' == typeof t)) {
 				var n = t.then;
 				if (t instanceof f) return (e._state = 3), (e._value = t), void l(e);
@@ -234,9 +218,7 @@
 				d(e, 0);
 			}),
 		(f._unhandledRejectionFn = function (e) {
-			void 0 !== console &&
-				console &&
-				console.warn('Possible Unhandled Promise Rejection:', e);
+			void 0 !== console && console && console.warn('Possible Unhandled Promise Rejection:', e);
 		});
 	var p = (function () {
 		if ('undefined' != typeof self) return self;
