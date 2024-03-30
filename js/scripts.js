@@ -13,9 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				(o = n),
 					(i = document.createElement('div')).classList.add('col-md-3', 'pokemon-card'),
 					(i.innerHTML = `
-            <img class="pokemon-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${(function e(
-							t,
-						) {
+            <img  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${(function e(t) {
 							let n = t.split('/').slice(-2, -1)[0];
 							return n;
 						})(o.url)}.png" alt="${o.name}" class="img-fluid">
@@ -28,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
 								.then((e) => {
 									let o = document.getElementById('pokemonDetails');
 									(o.innerHTML = `
-                    <img src="${e.sprites.front_default}" alt="${n.name}" class="img-fluid">
+                    <img src="${e.sprites.front_default}" alt="${n.name}" class="modal-img">
     <p><strong>Name:</strong> ${t(n.name)}</p>
     <p><strong>Height:</strong> ${(e.height / 10).toFixed(1)}m</p>
     <p><strong>Weight:</strong> ${(e.weight / 10).toFixed(1)}kg</p>
