@@ -1,127 +1,130 @@
-document.addEventListener('DOMContentLoaded', function () {
-	let e = document.getElementById('pokemonGrid');
-	function t(e) {
-		return e.charAt(0).toUpperCase() + e.slice(1);
-	}
-	fetch('https://pokeapi.co/api/v2/pokemon/?limit=150')
-		.then((e) => e.json())
-		.then((n) => {
-			let o = n.results;
-			o.forEach((n) => {
-				var o;
-				let i;
-				(o = n),
-					(i = document.createElement('div')).classList.add('col-md-3', 'pokemon-card'),
-					(i.innerHTML = `
-            <img  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${(function e(t) {
-							let n = t.split('/').slice(-2, -1)[0];
-							return n;
-						})(o.url)}.png" alt="${o.name}" class="img-fluid">
-            <p class="pokemon-name">${t(o.name)}</p>
-        `),
-					i.addEventListener('click', () => {
-						!(function e(n) {
-							fetch(n.url)
-								.then((e) => e.json())
-								.then((e) => {
-									let o = document.getElementById('pokemonDetails');
-									(o.innerHTML = `
+document.addEventListener('DOMContentLoaded', () => {
+	const pokemonGrid = document.getElementById('pokemonGrid');
 
-                    <img src="${e.sprites.front_default}" alt="${n.name}" class="modal-img">
+	const capitalizeName = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
-					<div class="infos-test">
-    <p><strong>Name:</strong> ${t(n.name)}</p>
-    <p><strong>Height:</strong> ${(e.height / 10).toFixed(1)}m</p>
-    <p><strong>Weight:</strong> ${(e.weight / 10).toFixed(1)}kg</p>
-    <p><strong>Types:</strong> ${e.types.map((e) => t(e.type.name)).join(', ')}</p>
-    <p><strong>Abilities:</strong> ${e.abilities.map((e) => t(e.ability.name)).join(', ')}</p>
-	</div>
-
-`),
-										$('#pokemonModal .modal-title').text(t(n.name)),
-										$('#pokemonModal').modal('show');
-								})
-								.catch((e) => console.error('Error fetching Pok\xe9mon details:', e));
-						})(o);
-					}),
-					e.appendChild(i);
+	const fetchPokemonData = () => {
+		fetch('https://pokeapi.co/api/v2/pokemon/?limit=150')
+			.then((response) => response.json())
+			.then((data) => {
+				data.results.forEach((pokemon) => {
+					createPokeball(pokemon);
+				});
+			})
+			.catch((error) => console.error('Error fetching Pokémon data:', error))
+			.finally(() => {
+				document.getElementById('loadingMessage').style.display = 'none';
 			});
-		})
-		.catch((e) => console.error('Error fetching Pok\xe9mon data:', e));
+	};
+
+	const createPokeball = (pokemon) => {
+		const pokeball = document.createElement('div');
+		pokeball.classList.add('col-md-3', 'pokemon-card');
+		pokeball.innerHTML = `
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getPokemonId(
+							pokemon.url,
+						)}.png" alt="${pokemon.name}" class="img-fluid">
+            <p class="pokemon-name">${capitalizeName(pokemon.name)}</p>
+        `;
+		pokeball.addEventListener('click', () => {
+			showPokemonDetails(pokemon);
+		});
+		pokemonGrid.appendChild(pokeball);
+	};
+
+	const getPokemonId = (url) => url.split('/').slice(-2, -1)[0];
+
+	const showPokemonDetails = (pokemon) => {
+		fetch(pokemon.url)
+			.then((response) => response.json())
+			.then((data) => {
+				const pokemonDetails = document.getElementById('pokemonDetails');
+				pokemonDetails.innerHTML = `
+                    <img src="${data.sprites.front_default}" alt="${pokemon.name}" class="modal-img">
+                    <div class="infos-test">
+                        <p><strong>Name:</strong> ${capitalizeName(pokemon.name)}</p>
+                        <p><strong>Height:</strong> ${(data.height / 10).toFixed(1)}m</p>
+                        <p><strong>Weight:</strong> ${(data.weight / 10).toFixed(1)}kg</p>
+                        <p><strong>Types:</strong> ${data.types
+													.map((type) => capitalizeName(type.type.name))
+													.join(', ')}</p>
+                        <p><strong>Abilities:</strong> ${data.abilities
+													.map((ability) => capitalizeName(ability.ability.name))
+													.join(', ')}</p>
+                    </div>
+                `;
+				$('#pokemonModal .modal-title').text(capitalizeName(pokemon.name));
+				$('#pokemonModal').modal('show');
+			})
+			.catch((error) => console.error('Error fetching Pokémon details:', error));
+	};
+
+	fetchPokemonData();
 });
-let pokemonRepo = (function () {
-	let e = [];
-	function t(t) {
-		'object' == typeof t && 'name' in t ? e.push(t) : console.error('pokemon is not correct');
-	}
-	function n() {
-		return e;
-	}
-	function o(e) {
-		return fetch(e.detailsUrl)
-			.then(function (e) {
-				return e.json();
+
+const pokemonRepo = (() => {
+	const pokemonList = [];
+
+	const addPokemon = (pokemon) => {
+		if (typeof pokemon === 'object' && 'name' in pokemon) {
+			pokemonList.push(pokemon);
+		} else {
+			console.error('Pokemon is not correct');
+		}
+	};
+
+	const getAllPokemon = () => pokemonList;
+
+	// const addListItem = (pokemon) => {
+	// 	const pokeballsGrid = document.querySelector('.pokemonGrid');
+	// 	if (!pokeballsGrid) return;
+
+	// 	const pokeball = document.createElement('div');
+	// 	const pokeballInner = document.createElement('div');
+	// 	pokeballInner.innerText = capitalizeName(pokemon.name);
+	// 	pokeballInner.classList.add('cards-inner');
+	// 	pokeballInner.setAttribute('data-target', '#exampleModal');
+	// 	pokeballInner.setAttribute('data-toggle', 'modal');
+	// 	pokeball.appendChild(cardInner);
+	// 	pokeballsContainer.appendChild(card);
+
+	// 	pokeball.addEventListener('click', () => {
+	// 		loadPokemonDetails(pokemon);
+	// 	});
+	// };
+
+	const loadPokemonList = () => {
+		document.getElementById('loadingMessage').style.display = 'block';
+		fetch('https://pokeapi.co/api/v2/pokemon/?limit=150')
+			.then((response) => response.json())
+			.then((data) => {
+				document.getElementById('loadingMessage').style.display = 'none';
+				data.results.forEach((pokemon) => {
+					addPokemon({ name: pokemon.name, detailsUrl: pokemon.url });
+				});
 			})
-			.then(function (t) {
-				(e.imageUrl = t.sprites.front_default),
-					(e.height = t.height),
-					(e.types = t.types),
-					(e.weight = t.weight),
-					(e.abilities = t.abilities);
+			.catch((error) => console.error(error));
+	};
+
+	const loadPokemonDetails = (pokemon) => {
+		fetch(pokemon.detailsUrl)
+			.then((response) => response.json())
+			.then((data) => {
+				pokemon.imageUrl = data.sprites.front_default;
+				pokemon.height = data.height;
+				pokemon.types = data.types;
+				pokemon.weight = data.weight;
+				pokemon.abilities = data.abilities;
+				showPokemonDetails(pokemon);
 			})
-			.catch(function (e) {
-				console.error(e);
-			});
-	}
+			.catch((error) => console.error('Error fetching Pokémon details:', error));
+	};
+
 	return {
-		add: t,
-		getAll: n,
-		addListItem: function e(t) {
-			var n;
-			let i = document.querySelector('.cards');
-			if (!i) return;
-			let r = document.createElement('div'),
-				a = document.createElement('cards-inner');
-			(a.innerText = (n = t.name).charAt(0).toUpperCase() + n.slice(1)),
-				a.classList.add('cards-inner'),
-				a.setAttribute('data-target', '#exampleModal'),
-				a.setAttribute('data-toggle', 'modal'),
-				r.appendChild(a),
-				i.appendChild(r),
-				(function e(t, n) {
-					t.addEventListener('click', function () {
-						(function e(t) {
-							o(t).then(function () {
-								var e;
-								(e = t), showPokemonDetails(e);
-							});
-						})(n);
-					});
-				})(a, t);
-		},
-		loadList: function e() {
-			return (
-				(document.getElementById('loadingMessage').style.display = 'block'),
-				fetch('https://pokeapi.co/api/v2/pokemon/?limit=150')
-					.then(function (e) {
-						return e.json();
-					})
-					.then(function (e) {
-						(document.getElementById('loadingMessage').style.display = 'none'),
-							e.results.forEach(function (e) {
-								t({ name: e.name, detailsUrl: e.url });
-							});
-					})
-					.catch(function (e) {
-						console.error(e);
-					})
-			);
-		},
-		loadDetails: o,
+		add: addPokemon,
+		getAll: getAllPokemon,
+		// addListItem: addListItem,
+		loadList: loadPokemonList,
+		loadDetails: loadPokemonDetails,
 	};
 })();
-pokemonRepo.loadList().then(function () {
-	pokemonRepo.getAll().forEach(function (e) {
-		pokemonRepo.addListItem(e);
-	});
-});
