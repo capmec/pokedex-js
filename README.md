@@ -8,8 +8,6 @@ Pokémon species.
 - **Pokémon List**: Displays a list of Pokémon species with their names and images.
 - **Detailed Pokémon Information**: Provides detailed information about a selected Pokémon, including its name, image,
   height, weight, abilities, and types.
-- **Search and Filter**: Enables users to search for Pokémon by name or other attributes, and filter Pokémon by type,
-  height, weight, etc.
 - **Responsive Design**: Supports a responsive design that adapts to different screen sizes and devices.
 
 ## Technologies Used

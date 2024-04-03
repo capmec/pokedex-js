@@ -6,26 +6,23 @@ document.addEventListener('DOMContentLoaded', function () {
 	fetch('https://pokeapi.co/api/v2/pokemon/?limit=150')
 		.then((e) => e.json())
 		.then((n) => {
-			let o = n.results;
-			o.forEach((n) => {
-				var o;
-				let i;
+			n.results.forEach((n) => {
+				var o, i;
+				let r;
 				(o = n),
-					(i = document.createElement('div')).classList.add('col-md-3', 'pokemon-card'),
-					(i.innerHTML = `
-            <img  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${(function e(t) {
-							let n = t.split('/').slice(-2, -1)[0];
-							return n;
-						})(o.url)}.png" alt="${o.name}" class="img-fluid">
+					(r = document.createElement('div')).classList.add('col-md-3', 'pokemon-card'),
+					(r.innerHTML = `
+            <img  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+							(i = o.url).split('/').slice(-2, -1)[0]
+						}.png" alt="${o.name}" class="img-fluid">
             <p class="pokemon-name">${t(o.name)}</p>
         `),
-					i.addEventListener('click', () => {
+					r.addEventListener('click', () => {
 						!(function e(n) {
 							fetch(n.url)
 								.then((e) => e.json())
 								.then((e) => {
-									let o = document.getElementById('pokemonDetails');
-									(o.innerHTML = `
+									(document.getElementById('pokemonDetails').innerHTML = `
 
                     <img src="${e.sprites.front_default}" alt="${n.name}" class="modal-img">
 
@@ -44,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 								.catch((e) => console.error('Error fetching Pok\xe9mon details:', e));
 						})(o);
 					}),
-					e.appendChild(i);
+					e.appendChild(r);
 			});
 		})
 		.catch((e) => console.error('Error fetching Pok\xe9mon data:', e));
@@ -93,7 +90,7 @@ let pokemonRepo = (function () {
 						(function e(t) {
 							o(t).then(function () {
 								var e;
-								(e = t), showPokemonDetails(e);
+								showPokemonDetails((e = t));
 							});
 						})(n);
 					});

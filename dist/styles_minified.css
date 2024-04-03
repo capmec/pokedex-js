@@ -1,14 +1,12 @@
 * {
 	box-sizing: border-box;
 }
-
 body {
 	margin: 10px;
 	background-color: #21213d;
 	padding: 10px;
 	align-items: center;
 }
-
 .navbar {
 	display: flex;
 	justify-content: space-between;
@@ -17,68 +15,58 @@ body {
 	padding: 10px 20px;
 	border-bottom: 2px solid #f53b57;
 }
-
 .sub-header {
 	display: flex;
 	flex-direction: column;
 	justify-items: center;
 	text-align: center;
-	color: blanchedalmond;
+	color: #ffebcd;
 	margin-left: 24px;
 	margin-right: 24px;
 	padding: 24px;
 }
-
-/* Custom CSS for Pokéballs */
 .pokemon-card {
 	cursor: pointer;
 	text-align: center;
-	background-image: url('../img/pokeball.png'); /* Path to your Pokéball image */
+	background-image: url('../img/pokeball.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
 	position: relative;
-	width: 120px; /* Adjust the size of the Pokémon card */
-	height: 120px; /* Adjust the size of the Pokémon card */
+	width: 120px;
+	height: 120px;
 	margin-bottom: 60px;
 	margin-right: 30px;
 }
-
+.pokemon-img,
 .pokemon-name {
 	position: absolute;
-	bottom: -40px;
-	color: blanchedalmond;
 	left: 50%;
+}
+.pokemon-name {
+	bottom: -40px;
+	color: #ffebcd;
 	transform: translateX(-50%);
 	width: 100%;
 	margin-top: 10px;
-	font-weight: bold; /* Make the Pokémon name bold */
+	font-weight: 700;
 }
-
-/* Adjust the size and positioning of the Pokémon image */
 .pokemon-img {
-	position: absolute;
 	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%) scale(1.5); /* Center the Pokémon image and scale it */
-	width: 75px; /* Adjust the size of the Pokémon image */
-	height: auto; /* Let height adjust automatically to maintain aspect ratio */
-	z-index: 1; /* Ensure the Pokémon image appears above the Pokéball background */
+	transform: translate(-50%, -50%) scale(1.5);
+	width: 75px;
+	height: auto;
+	z-index: 1;
 }
-
-/* MODAL */
-
 .modal-img {
 	margin-top: 25px;
 	width: 160px;
 	height: 160px;
 }
-
 .infos-test {
 	margin-top: 80px;
 	text-align: center;
 }
-
 .modal-header {
 	display: flex;
 	justify-content: space-evenly;
@@ -86,8 +74,6 @@ body {
 	border: none;
 	background-image: url(../img/card-bg.png);
 }
-
-/* Custom styles for the close button */
 .modal-header .close {
 	border-radius: 50%;
 	padding: 0.5em;
@@ -97,44 +83,36 @@ body {
 	color: #f53b57;
 	position: relative;
 }
-
-/* Change close button color on hover */
 .modal-header .close:hover {
 	border: 2px solid #f53b57;
 	background-color: #fff;
-	color: #ffffff;
+	color: #fff;
 }
-
+.modal-header .close::after,
 .modal-header .close::before {
 	content: ' ';
 	position: absolute;
 	display: block;
 	background-color: #f53b57;
+	transform: rotate(45deg);
+}
+.modal-header .close::before {
 	width: 2px;
 	left: 12px;
 	top: 5px;
 	bottom: 5px;
-	transform: rotate(45deg);
 }
-
 .modal-header .close::after {
-	content: ' ';
-	position: absolute;
-	display: block;
-	background-color: #f53b57;
 	height: 2px;
 	top: 12px;
 	left: 5px;
 	right: 5px;
-	transform: rotate(45deg);
 }
-
 .modal-title {
 	font-size: 2rem;
 	font-weight: 600;
 	color: #333;
 }
-
 .modal-body {
 	display: flex;
 	flex-direction: column;
@@ -143,7 +121,6 @@ body {
 	background-image: url(../img/card-bg2.png);
 	background-size: cover;
 }
-
 .modal-footer {
 	display: flex;
 	border: none;
